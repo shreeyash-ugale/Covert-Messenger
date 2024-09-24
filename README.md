@@ -95,4 +95,4 @@ Use `ncat` to connect to the chat server through the secure tunnel:
 ncat 127.0.0.1 4444
 ```
 ---
-#### If you setup a firewall between port 6666 and 5555 and observe the traffic with [Wireshark](https://www.wireshark.org/), you will notice that all communication Takes place over ICMP and the data within the packet is encrypted as expected
+#### If you observe the traffic between 6666 and 5555 on your machine with [Wireshark](https://www.wireshark.org/), you will notice that all communication takes place over ICMP and the data within the packet is encrypted as expected
