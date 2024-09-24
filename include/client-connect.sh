@@ -1,7 +1,7 @@
 #/bin/bash
 receive() {
   printf '%s: ' "$client_name" > $output
-  local message
+  declare -i message
   while IFS= read -r message; do
     clear_line
     printf '\033[0;36m%s: \033[0;39m%s\n%s: ' "$client_name" "$message" "$host_name"

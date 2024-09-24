@@ -29,17 +29,18 @@
 
 ---
 
+# NOTE:
+For the sake of simplicity this project has been modified to chat on loopback address instead of two machines. Route the traffic  through ports so the data gets encrypted, burried in packets and decrypted approriately.
+
 ## Dependencies
 
-- **ptunnel-ng**: A tool that tunnels data in ICMP packets.
+- **ptunnel-ng**: A tool to setup ICMP tunnel
 - **Python 3**: Required for port forwarding.
-- **ncat**: Netcat tool for connecting to the chat server.
-- **mingw**: Required for compiling Windows binaries.
-- **gsudo (choco)**: Required for elevated permissions on Windows.
+- **ncat**: Netcat tool that comes wuth nmap
 
 ## Installation
 
-### 1. Install ptunnel-ng
+### 1. Install ptunnel-ng on WSL
 
 Clone and build ptunnel-ng from the following repository:
 
@@ -55,41 +56,38 @@ OR
 wget http://ports.ubuntu.com/pool/universe/p/ptunnel-ng/ptunnel-ng_1.42-1_arm64.deb
 sudo dpkg -i ptunnel-ng_1.42-1_arm64.deb
 ```
+### 2. Install ptunnel-ng on Mac
 
-To compile for Windows, install mingw and ensure WinPcap support if needed. WinPcap can be downloaded here:
-
-[WinPcap Download](http://www.winpcap.org/install/bin/WpdPack_4_0_2.zip)
-
-OR
-
-Download from [releases](https://github.com/utoni/ptunnel-ng/releases/tag/v1.42)
+```bash
+brew install ptunnel
+```
 
 ## Usage
 
-### Step 1: Start ptunnel on Linux
-Run ptunnel-ng on the Linux server:
+### Step 1: Start ptunnel listner
 ```bash
 sudo ptunnel-ng
 ```
-### Step 2: Start ptunnel on Windows
-Run ptunnel-ng on the Windows client, specifying the WSL IP and setting up the tunnel:
+### Step 2: Connect ptunnel to listener
+
 ```bash
-sudo ptunnel-ng -p<WSL_IP> -l6666 -R5555
+sudo ptunnel-ng -p127.0.0.1 -l6666 -R5555
 ```
-### Step 3: Start Secure Tunnel on Linux
-Start port forwarding on the Linux server using Python:
+### Step 3: Start Secure Tunnel 2
+Start port forwarder 2
 ```bash
 python3 pf-lin.py
 ```
-### Step 4: Start Secure Tunnel on Windows
-Start port forwarding on the Windows client using Python:
+### Step 4: Start Secure Tunnel 1
+Start port forwarder 1
 ```bash
 python3 pf-win.py
 ```
 ### Step 5: Start the Chat Server
-Run the main Bash script to start the chat server on Linux:
+Run the main Bash script to start the chat server
 ```bash
-sh main-chat.sh
+chmod +x main-chat.sh
+./main-chat.sh
 ```
 ### Step 6: Connect to the Chat Server
 Use `ncat` to connect to the chat server through the secure tunnel:
@@ -97,5 +95,4 @@ Use `ncat` to connect to the chat server through the secure tunnel:
 ncat 127.0.0.1 4444
 ```
 ---
-#### If you check your WSL(Hyper-V) firewall which sits between Windows and WSl with [Wireshark](https://www.wireshark.org/), you will notice that all communication Takes place over ICMP and the data within the packet is encrypted as expected
-
+#### If you setup a firewall between port 6666 and 5555 and observe the traffic with [Wireshark](https://www.wireshark.org/), you will notice that all communication Takes place over ICMP and the data within the packet is encrypted as expected

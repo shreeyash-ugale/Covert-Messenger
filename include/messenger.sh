@@ -1,7 +1,7 @@
 #/bin/bash
 chat() {
   printf '%s: ' "$host_name"
-  declare -i message
+  local message
   while [ 1 ]; do
     read -r message
     clear_line > $output

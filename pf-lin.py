@@ -64,7 +64,7 @@ def server(local_host, local_port, remote_host, remote_port):
 
 def main():
     #server(listen_host, listen_port, connect_host, connect_port)
-    server("127.0.0.1", 5555, "127.0.0.1", 6666)
+    server("127.0.0.1", 5555, "127.0.0.1", 7777)
 
 
 if __name__ == "__main__":
