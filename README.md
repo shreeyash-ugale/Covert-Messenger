@@ -66,12 +66,18 @@ brew install ptunnel
 
 ### Step 1: Start ptunnel listner
 ```bash
+On WSL
 sudo ptunnel-ng
+On MAC OS
+sudo ptunnel
 ```
 ### Step 2: Connect ptunnel to listener
 
 ```bash
+On WSL
 sudo ptunnel-ng -p127.0.0.1 -l6666 -R5555
+On Mac OS
+sudo ptunnel -p 127.0.0.1 -lp 6666 -dp 5555 -c lo0
 ```
 ### Step 3: Start Secure Tunnel 2
 Start port forwarder 2
